@@ -1,0 +1,115 @@
+<!-- history.pushState(state, title, url);
+<script>
+window.onpopstate = function(e) {
+       console.log(e.state);
+   };
+   var state = { 'page_id': 1, 'user_id': 5 };
+var title = 'Hello World';var url = 'hello-world';
+history.pushState(state, title, url);
+</script> -->
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="renderer" content="webkit"/>
+<head>
+    <title>pushState demo00</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei";
+            transition: background-color .3s;
+        }
+
+        .bg-org {
+            color: #383c3c;
+            background-color: #FF6633;
+        }
+
+        .bg-blue {
+            color: #fbfaf5;
+            background-color: #6699FF;
+        }
+
+        .time {
+            margin-top: 20%;
+            text-align: center;
+            font-size: 4em;
+            font-weight: 100;
+        }
+
+        .switch {
+            margin: auto;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            bottom: 25%;
+            left: 0;
+            right: 0;
+            cursor: pointer;
+            box-shadow: 0 0 0 5px rgba(255, 255, 255, .6);
+            border-radius: 50%;
+            transition: box-shadow .1s;
+        }
+
+        .switch:hover {
+            box-shadow: 0 0 0 5px rgba(255, 255, 255, .75);
+        }
+
+        .switch:active {
+            box-shadow: 0 0 0 30px rgba(255, 255, 255, .4);
+        }
+    </style>
+</head>
+
+<body class="bg-org">
+<h1 id="time" class="time">Loading...</h1>
+<div id="switch" class="switch"></div>
+<script>
+    window.onload = function () {
+        var time = $('#time');
+
+        function $(selector) {
+            return document.querySelector(selector);
+        }
+
+        setTimeout(function () {
+            if (getUrlParam('state') == 'blue') {
+                console.log('asd', $('body').className)
+                $('body').className = 'bg-blue';
+            } else {
+                $('body').className = 'bg-org';
+            }
+        }, 50)
+
+        // 显示当前时间
+        setInterval(function () {
+
+            time.innerHTML = 'asdasd';
+
+        }, 500);
+
+        $('#switch').addEventListener('click', toggleState, false);
+
+        function toggleState(e) {
+            var flag = $('body').className == 'bg-org' ? 'bg-blue' : 'bg-org';
+            window.location = location.pathname + '?state=' + flag.split('-')[1];
+            $('body').className = flag;
+            debugger
+        }
+
+        /**
+         * 获取url参数
+         * @param  {String} name 参数名
+         * @return {String}      参数值
+         */
+        function getUrlParam(name) {
+            var reg, value;
+            reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            value = window.location.search.substr(1).match(reg);
+            return value == null ? null : decodeURI(value[2]);
+        }
+    }
+</script>
+</body>
+</html>
